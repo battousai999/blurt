@@ -288,6 +288,7 @@
 				params.okButtonText = opts.okButtonText || params.okButtonText;
 				params.cancelButtonText = opts.cancelButtonText || params.cancelButtonText;
 				params.escapable = opts.escapable || params.escapable;
+				params.value = opts.value || '';
 				if(opts.onConfirm && typeof opts.onConfirm === 'function'){
 					params.onConfirm = opts.onConfirm;
 				}
@@ -392,7 +393,7 @@
 		Blurt.util.show(content);
 		Blurt.util.show(box);
 		Blurt.util.addClass(dialog,'dialog-anim-show');
-		prmpt.value = '';
+		prmpt.value = params.value || '';
 		prmpt.focus();
 		okBtn.addEventListener('click', _handleBrompt);
 		cancelBtn.addEventListener('click', _handleCancel);
