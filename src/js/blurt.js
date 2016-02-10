@@ -161,7 +161,8 @@
 			text: null,
 			type: 'info',
 			okButtonText: 'OK',
-			escapable: false
+			escapable: false,
+			onClosed: null
 		};
 
 		switch(args.length){
@@ -181,6 +182,7 @@
 					params.type = opts.type || params.type;
 					params.okButtonText = opts.okButtonText || params.okButtonText;
 					params.escapable = opts.escapable || params.escapable;
+					params.onClosed = opts.onClosed || params.onClosed;
 				}
 				break;
 			case 2:
@@ -258,8 +260,15 @@
 		}else{
 			okBtn.innerText = params.okButtonText;
 		}
-		okBtn.focus();
-		okBtn.addEventListener('click', _hide);
+		okBtn.focus();		
+		
+		okBtn.addEventListener('click', function ()
+		{
+			_hide();
+			
+			if (params.onClosed !== undefined && params.onClosed !== null)
+				setTimeout(params.onClosed, Blurt.constant.hideInterval);
+		});
 	};
 
 	function _processParamsBrompt(args){
