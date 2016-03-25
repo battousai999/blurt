@@ -79,7 +79,7 @@
 		},
 		setText: function(elem, txt, isHtml){
             if(isHtml){
-                elem.innerHtml = txt;
+                elem.innerHTML = txt;
             } else {
                 elem.innerHTML = '';
                 var txtNode = document.createTextNode(txt);
