@@ -77,10 +77,15 @@
 		show: function(elem){
 			Blurt.util.removeClass(elem, Blurt.cls.hidden);
 		},
-		setText: function(elem, txt){
-			elem.innerHTML = '';
-			var txtNode = document.createTextNode(txt);
-			elem.appendChild(txtNode);
+		setText: function(elem, txt, isHtml){
+            if(isHtml){
+                elem.innerHtml = txt;
+            } else {
+                elem.innerHTML = '';
+                var txtNode = document.createTextNode(txt);
+                elem.appendChild(txtNode);
+            }
+			
 			/*if(elem.textContent){
 				elem.textContent = txt;
 			}
@@ -159,6 +164,7 @@
 		var params = {
 			title: 'Title',
 			text: null,
+            includesHtml: false,
 			type: 'info',
 			okButtonText: 'OK',
 			escapable: false,
@@ -179,6 +185,7 @@
 					var opts = args[0];
 					params.title = opts.title || params.title;
 					params.text = opts.text || params.text;
+                    params.includesHtml = opts.includesHtml || params.includesHtml;
 					params.type = opts.type || params.type;
 					params.okButtonText = opts.okButtonText || params.okButtonText;
 					params.escapable = opts.escapable || params.escapable;
@@ -241,7 +248,7 @@
 		if(params.text === null || params.text === ''){
 			Blurt.util.hide(content);
 		}else if(typeof params.text === 'string'){
-			Blurt.util.setText(text, params.text);
+			Blurt.util.setText(text, params.text, params.includesHtml);
 			Blurt.util.show(content);
 			Blurt.util.show(text);
 		}
@@ -275,6 +282,7 @@
 		var params = {
 			title: 'Title',
 			text: 'Enter value',
+            includesHtml: false,
 			type: 'info',
 			okButtonText: 'OK',
 			cancelButtonText: 'Cancel',
@@ -293,6 +301,7 @@
 				var opts = args[0];
 				params.title = opts.title || params.title;
 				params.text = opts.text || params.text;
+                params.includesHtml = opts.includesHtml || params.includesHtml;
 				params.type = opts.type || params.type;
 				params.okButtonText = opts.okButtonText || params.okButtonText;
 				params.cancelButtonText = opts.cancelButtonText || params.cancelButtonText;
@@ -314,7 +323,7 @@
 					win.console.error('Required: 1st string, 2nd function.');
 					return null;
 				}
-				break;
+				//break;
 			case 3:
 				if(typeof args[0] !== 'string' || typeof args[1]!=='function' || typeof args[2]!=='function'){
 					win.console.error('Required: 1st string, 2nd function and 3rd function.');
@@ -387,7 +396,7 @@
 			_initialized = !_initialized;
 		}
 		Blurt.util.show(prmpt);
-		Blurt.util.setText(title, params.title);
+		Blurt.util.setText(title, params.title, params.includesHtml);
 		Blurt.util.hide(text);
 		//prmpt.setAttribute('placeholder', params.text);
 
