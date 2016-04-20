@@ -269,13 +269,17 @@
 		}
 		okBtn.focus();		
 		
-		okBtn.addEventListener('click', function ()
+		var closeFunction = function ()
 		{
 			_hide();
 			
 			if (params.onClosed !== undefined && params.onClosed !== null)
 				setTimeout(params.onClosed, Blurt.constant.hideInterval);
-		});
+		};
+		
+		okBtn.addEventListener('click', closeFunction);
+		
+		return { close: closeFunction };
 	};
 
 	function _processParamsBrompt(args){
@@ -323,7 +327,7 @@
 					win.console.error('Required: 1st string, 2nd function.');
 					return null;
 				}
-				//break;
+				break;
 			case 3:
 				if(typeof args[0] !== 'string' || typeof args[1]!=='function' || typeof args[2]!=='function'){
 					win.console.error('Required: 1st string, 2nd function and 3rd function.');
